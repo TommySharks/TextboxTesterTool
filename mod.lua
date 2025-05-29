@@ -20,6 +20,6 @@ end
 
 function Mod:onWheelMoved(x,y)
     
-    self.scroll_y = Utils.clamp(self.scroll_y + y*10, 100000, 10000)
+    self.scroll_y = Utils.clamp(self.scroll_y + y*10, 0, 100)
 
 end
