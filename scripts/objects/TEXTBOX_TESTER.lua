@@ -10,9 +10,6 @@ self.clipboard_button = Sprite("clipboard",33,320)
 
 self.portrait_toggle = Sprite("box_unchecked",161,113)
 
-self.font_button = Rectangle(555,55,25,25)
-self.font_button:setColor(0,0,1)
-
 self.font_page = 0
 
 self.x_offset = 0
@@ -54,7 +51,6 @@ self.font_select = FONT_SELECT(33,80,67,25)
 self:addChild(self.rectangle)
 self:addChild(self.clipboard_button)
 self:addChild(self.portrait_toggle)
-self:addChild(self.font_button)
 self:addChild(self.typer)
 self:addChild(self.font_select)
 
@@ -179,11 +175,6 @@ function TextboxTester:update()
                 self.portrait_select = false
                 self.typer:togglePortrait()
             end
-        
-        elseif self.font_button and self.font_button:clicked() then
-                self.font_page = self.font_page + 1
-                print(self.fonts[self.font_page])
-                self.typer.textbox:setFont(self.fonts[self.font_page])
             
         elseif self.left_arrow and self.left_arrow:clicked() then
             self.typer.x_offset = self.typer.x_offset - 1
