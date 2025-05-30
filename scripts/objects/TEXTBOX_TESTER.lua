@@ -67,17 +67,18 @@ end
 function TextboxTester:draw()
     super.draw(self)
     love.graphics.setColor(1,1,1)
+    love.graphics.setFont(love.graphics.newFont("assets/fonts/main.ttf",16))
+    love.graphics.print("Testbox Tester Tool by Tommy Sharks",5,5)
     love.graphics.setFont(love.graphics.newFont("assets/fonts/main.ttf",32))
     love.graphics.print(""..self.typer.x_offset,340,108)
     love.graphics.print(""..self.typer.y_offset,561,107)
-
     
 
     if self.clipboardtexttimer > 0 then
         Draw.printShadow("Copied to your clipboard!", 0, 480 - 450, 0, "center", 640)
     end
 
-    if self.portrait_select == true then
+    if self.portrait_select == true and self.font_select.mouse_clicked == false then
         Draw.setColor(1, 1, 1, 1)
         
         local textures = {}
@@ -200,9 +201,9 @@ function TextboxTester:update()
                 self.typer:updatePortrait()
             end
         elseif self.clipboard_button and self.clipboard_button:clicked() then
-            local filename = Game:getFlag("portrait_id")
+            local filename = Game:getFlag("portrait_id","none")
             filename = Utils.split(filename, "/")[#Utils.split(filename, "/")]
-            local actor_name = Utils.split(Game:getFlag("portrait_id"), "/")[2]
+            local actor_name = Utils.split(Game:getFlag("portrait_id","none"), "/")[2]
             love.system.setClipboardText("cutscene:text(\""..Game:getFlag("textboxtext").."\", \""..filename.."\", \""..actor_name.."\")")
             self.clipboardtexttimer = 1
         end

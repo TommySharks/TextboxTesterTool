@@ -4,8 +4,6 @@ function FontButton:init(x,y,width,height,text)
     super.init(self,x,y,width,height)
     self.layer = 1000000
     self.text_string = text
-    --self.text_object = Text(text,0,0,500,100)
-    --self:addChild(self.text_object)
 
 end
 
@@ -20,6 +18,7 @@ function FontButton:update()
                     table.insert(self.parent.fonts,1,self.text_string)
                 end
             end
+            self.parent:ToggleSelect()
         end
     end
 end

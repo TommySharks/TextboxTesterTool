@@ -19,7 +19,6 @@ self.portrait_page = 1
 
 self.x_offset = 0
 self.y_offset = 0
-
 self.textures = {}
 
 for _, id in pairs(Assets.texture_ids) do

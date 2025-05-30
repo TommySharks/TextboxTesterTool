@@ -11,32 +11,60 @@ function FontSelect:init(x,y,width,height)
     
     self.rectangle = Rectangle(0,0,self.width+Assets.getFont("main"):getWidth(self.fonts[1])+5,self.height)
     self.rectangle:setColor(0,0,0)
-    --self.width = self.width+Assets.getFont(self.fonts[self.font_page]):getWidth(self.fonts[self.font_page])+5
+
+    self.max_font_page = 1 + math.floor(math.max(0, #self.fonts - 1)/8)
+    self.pos_var = 1
 end
 
 function FontSelect:update()
     super.update(self)
-    
+
     self.rectangle.height = self.height
     self.rectangle.width = 67+Assets.getFont("main"):getWidth(self.fonts[1])+5
 
-    if Input.mousePressed() then
+    if Input.mousePressed(1) then
+
+        if self.right_arrow and self.right_arrow:clicked() then
+            self.pos_var = 1
+            self.font_page = self.font_page + 1 
+            if self.font_page > self.max_font_page then
+                self.font_page = 1
+            end
+            for i,v in ipairs(self.children) do 
+                if v ~= self.right_arrow then
+                    self:removeChild(v)
+                end
+            end
+            self:addButtons()
+        end
+
+        if self.left_arrow and self.left_arrow:clicked() then
+            self.pos_var = 1
+            self.font_page = self.font_page - 1 
+            if self.font_page < 1 then
+                self.font_page = self.max_font_page
+            end
+            for i,v in ipairs(self.children) do 
+                if v ~= self.right_arrow then
+                    self:removeChild(v)
+                end
+            end
+            self:addButtons()
+        end
         if self:isMouseOver() then
             self:addChild(self.rectangle)
+            self.left_arrow = Sprite("left_arrow",15,325)
+            self.left_arrow:setScale(2)
+
+            self.right_arrow = Sprite("right_arrow",100,325)
+            self.right_arrow:setScale(2)
+            self:addChild(self.right_arrow)
+            self:addChild(self.left_arrow)
+
             if self.mouse_clicked == false then
                 self.mouse_clicked = true
                 self.height = self.height+350
-
-                for i, v in ipairs(self.fonts) do
-                    self.font_button = FONT_BUTTON(0,0+35*i,100,25,v)
-                    self:addChild(self.font_button)
-                end
-            elseif self.mouse_clicked == true then
-                self.mouse_clicked = false
-                self.height = self.height-350
-                for i,v in ipairs(self.children) do 
-                    self:removeChild(v)
-                end
+                self:addButtons()
             end
             self.parent:updateFont()
         else
@@ -45,23 +73,11 @@ function FontSelect:update()
                 self.height = self.height-350
                 for i,v in ipairs(self.children) do 
                     self:removeChild(v)
+                    self.pos_var = 1
                 end
             end
         end
     end
-
-    if self.font_page > #self.fonts then
-        self.font_page = 1
-    elseif self.font_page < 1 then
-        self.font_page = #self.fonts
-    end
-
-    for i,v in ipairs(self.children) do
-        if v ~= self.rectangle then
-            v.y = v.y+Mod.scroll_y
-        end
-    end
-
 end
 
 
@@ -70,9 +86,8 @@ function FontSelect:draw()
 
 
     if self.mouse_clicked == true then
-        love.graphics.setColor(0,0,0,1)
-        --love.graphics.rectangle("fill",0,0,self.width+Assets.getFont(self.fonts[self.font_page]):getWidth(self.fonts[self.font_page]),self.height)
         love.graphics.setColor(1,1,1,1)
+        love.graphics.print(self.font_page.."/"..self.max_font_page,45,320)
         
     end
     if self:isMouseOver() and self.mouse_clicked == false then
@@ -85,6 +100,7 @@ function FontSelect:draw()
     love.graphics.print("Font: "..self.fonts[1],3,-5)
 end
 
+
 function FontSelect:isMouseOver()
     local mx, my = Input.getCurrentCursorPosition()
     if mx > self.x and mx < self.width+Assets.getFont("main"):getWidth(self.fonts[1])+5+self.x and my > self.y and my < self.height+self.y then
@@ -94,4 +110,26 @@ function FontSelect:isMouseOver()
     end
 end
 
+function FontSelect:ToggleSelect()
+    if self.mouse_clicked == true then
+        self.mouse_clicked = false
+        self.height = self.height-350
+        for i,v in ipairs(self.children) do 
+            self:removeChild(v)
+            self.pos_var = 1
+        end
+        self.parent:updateFont()
+    end
+end
+
+function FontSelect:addButtons()
+    local start = (self.font_page - 1) * 8 + 1
+    local endd = math.min(self.font_page * 8, #self.fonts)
+
+    for i = start,endd do
+        self.font_button = FONT_BUTTON(0,0+35*self.pos_var,100,25,self.fonts[i])
+        self:addChild(self.font_button)
+        self.pos_var = self.pos_var + 1                     
+    end
+end
 return FontSelect
