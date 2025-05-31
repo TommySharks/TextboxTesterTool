@@ -2,7 +2,7 @@
 
 1) Download the project code as a ZIP file
 2) Open your Kristal Installation Folder
-3) (Windows) Extract the zip file contents inside /AppData/Roaming/LOVE/kristal/mods/
+3) (Windows) Extract the zip file contents inside /AppData/Roaming/LOVE/kristal/mods/ or /AppData/Roaming/kristal/mods/
 
 # Purpose
 
