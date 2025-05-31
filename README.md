@@ -8,7 +8,7 @@
 
 Extensible Add-On for Kristal that quickly lets you simulate what custom dialogue boxes would look like rendered in-game.
 
-Save time on projects by avoiding needing to recompile your large project over and over to get your text boxes looking as desired in-game.
+Save time on projects by avoiding needing to rerun your large project over and over to get your text boxes looking as desired in-game.
 # Features
 
 ## Key Features
