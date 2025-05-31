@@ -26,6 +26,7 @@ Save time on projects by avoiding needing to recompile your large project over a
 ### Add a custom Portrait
 1) Open /textbox_tester_tool/assets/sprites/face/typer/
 2) Create a new folder in the directory with the name of your actor, and place your portrait files inside the new actor folder.
+- Custom portrait folders **MUST BE THE SAME NAME** as your actor file
 ### Add a custom Font
 - Place additional custom font files inside /textbox_tester_tool/assets/fonts/
 
